@@ -10,7 +10,7 @@ public:
     City();
 
 private:
-    int getInput();
+    bool getInput();
     void createLine(string lineStr);
     void connectSwitchingOptions();
     string extractLineName(string lineStr);

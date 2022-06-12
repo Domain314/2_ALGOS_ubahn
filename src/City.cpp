@@ -1,23 +1,29 @@
 #include "City.hpp"
 
+// getInput(), until it returns true
 City::City() {
     while (true) {
-        if (getInput() == 0) {
+        if (getInput()) {
             break;
         }
     }
 }
 
-int City::getInput() {
+// load Stations-Data from file
+// initialize construction of all datastructures
+// start searchLoop
+bool City::getInput() {
     cout << "Drag&Drop Data to create City";
     string path;
-//    std::cin >> path;
 
-    ifstream inFile("/home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder/data.txt", ios::in);
-//    ifstream inFile(path, ios::in);
-    if( inFile.fail( ) ) {
+    std::cin >> path;
+    ifstream inFile(path, ios::in);
+
+//    ifstream inFile("/home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder/data.txt", ios::in);
+
+    if( inFile.fail() ) {
         cerr << "Error: File not found." << path <<endl;
-        return 1;
+        return false;
     } else {
         string lineStr;
         while (getline(inFile, lineStr))
@@ -26,12 +32,19 @@ int City::getInput() {
         }
         connectSwitchingOptions();
 
-        std::cout << "\ndone\n" << std::endl;
+        std::cout << "\nDatastructures initialized.\n" << std::endl;
         searchLoop();
     }
-    return 0;
+    return true;
 }
 
+// input: [U1: "Leopoldau" 2 "Grossfeldsiedlung" 1 "Aderklaaer Strasse" 1 "Rennbahnweg" 2 "Kagraner Platz" 2 "Kagran" 1 "Alte Donau" 2 "Kaisermuehlen-VIC" 1 "Donauinsel" 2...]
+// extractLineName: U1
+// strArray: (cut string into pieces, where " is found) [U1: ], [Leopoldau], [ 2 ], [Grossfeldsiedlung], [ 1 ], [Aderklaaer Strasse], [ 1 ], [Rennbahnweg], [ 2 ], ...
+// transform all to lowercase and clean costs, from index 1:  [U1: ], [leopoldau], [2], [grossfeldsiedlung], [1], [aderklaaer strasse], [1], [rennbahnweg], [2], ...
+// foreach strArray: create new Station from i (station-name) and i+1 (travelling costs to next station)
+// check if station name is present in SwitchingStations-map. no: add Station to map; yes: add this line to SwitchingStations->Station->SwitchingLineOptions
+// end: add finished line to LineByIndex-vector and LineByName-map.
 void City::createLine(string lineStr) {
     string lineName = extractLineName(lineStr);
     stringstream ss(lineStr);
@@ -65,10 +78,12 @@ void City::createLine(string lineStr) {
     LinesByIndex.push_back(newLine);
 }
 
+// returns the cost to travel, from strArray
 int City::extractCost(string strArrayEntry) {
     return (int)strArrayEntry[1]-48;
 }
 
+// extract lineName before the :
 string City::extractLineName(string lineStr) {
     stringstream ss;
     if (lineStr[1] == ':') ss << lineStr[0];
@@ -77,10 +92,14 @@ string City::extractLineName(string lineStr) {
     return ss.str();
 }
 
+// ask for Stations endlessly, until "q" is entered, which breaks the loop.
+// expected input: "Schwedenplatz / Karlsplatz"
+// separate Station-Names, add to string-vector and clean up: [schwedenplatz], [karlsplatz] (to lowecase and no empty spaces at beginning and end of each name)
+// initialize search or output error and restart loop
 void City::searchLoop() {
     while (true) {
         string stations;
-        cout << "\nEnter first and last Station to begin search. Separate with dash -\n[first] - [last]\nOr \"q\" to quit\n";
+        cout << "\nEnter first and last Station to begin search. Separate with slash -\n[first] / [last]\nOr \"q\" to quit\n";
         getline(cin, stations);
         if (stations == "q") { break; }
 
@@ -88,7 +107,7 @@ void City::searchLoop() {
         string temp;
         vector<string> searchArray;
 
-        while (getline(ss, temp, '-')) {
+        while (getline(ss, temp, '/')) {
             while(temp[temp.size()-1] == ' ') { temp.erase(temp.size()-1, 1); }
             while(temp[0] == ' ') { temp.erase(0, 1); }
             transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
@@ -101,12 +120,13 @@ void City::searchLoop() {
                 cout << "Stations not found\n\n";
             }
         } else {
-            cout << "Please enter a valid format: \n[first] - [last]\n\"q\"\n";
+            cout << "Please enter a valid format: \n[first] / [last]\n\"q\"\n";
         }
 
     }
 }
 
+// connect all lines with each other and make an infinite search-tree
 void City::connectSwitchingOptions() {
     for (int i = 0; i < LinesByIndex.size(); ++i) {
         for (int j = 0; j < LinesByIndex.at(i)->Stations.size(); ++j) {

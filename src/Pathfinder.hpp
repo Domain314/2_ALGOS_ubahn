@@ -68,11 +68,10 @@ private:
     void withLineSwitching(string* first, string* last, vector<string> firstLines, vector<string> lastLines);
 
     void initiateSearch(vector<string>* travelledLines, vector<string>* switchingOptions, vector<string>* firstLines, vector<string>* lastLines, int iterations);
-    bool isConnected(Line* startLine, Line* endLine);
     bool recLineSearch(vector<string>* travelledLines, vector<string>* switchingOptions, vector<string>* actualLines, string searchLine, int deepness);
 
     void createTravellingOption(string* first, string* last, vector<string>* switchingOptions,vector<string>* firstLines);
-    TravellingOption* calcTravellingOption(int pos, string* first, string* last, string* switchingLine, Line* line,vector<string>* switchingArray);
+    TravellingOption* calcTravellingOption(int pos, string* first, string* last, Line* line,vector<string>* switchingArray);
 
     static bool compareTravellingOptions(TravellingOption* first, TravellingOption* second);
     int calcTravellingCosts(TravellingOption* travellingOption);

@@ -1,3 +1,0 @@
-/home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder31/cmake-build-debug/CMakeFiles/WienerNoder31.dir
-/home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder31/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder31/cmake-build-debug/CMakeFiles/rebuild_cache.dir

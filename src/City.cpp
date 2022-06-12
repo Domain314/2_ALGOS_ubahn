@@ -16,10 +16,10 @@ bool City::getInput() {
     cout << "Drag&Drop Data to create City";
     string path;
 
-    std::cin >> path;
-    ifstream inFile(path, ios::in);
+//    std::cin >> path;
+//    ifstream inFile(path, ios::in);
 
-//    ifstream inFile("/home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder/data.txt", ios::in);
+    ifstream inFile("/home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder/data.txt", ios::in);
 
     if( inFile.fail() ) {
         cerr << "Error: File not found." << path <<endl;

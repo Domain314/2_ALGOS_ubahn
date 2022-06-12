@@ -1,0 +1,4 @@
+/var/lib/snapd/snap/clion/193/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/var/lib/snapd/snap/clion/193/bin/ninja/linux/ninja -G Ninja -S /home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder31 -B /home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder31/cmake-build-debug
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/domain/Nextcloud/Documents/Technikum/2_Semester/ALGOS/WienerNoder31/cmake-build-debug
